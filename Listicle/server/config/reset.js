@@ -5,9 +5,9 @@ import events from '../../data/events.js';
 async function createDatabase() {
     // Drop the events table if it exists; Create a new table called events if it doesn't exist
     const createTableQuery = `
-        DROP TABLE IF EXISTS music_discovery_zhsg;
+        DROP TABLE IF EXISTS events;
 
-        CREATE TABLE IF NOT EXISTS music_discovery_zhsg (
+        CREATE TABLE IF NOT EXISTS events (
             id VARCHAR(50) PRIMARY KEY,
             title VARCHAR(255) NOT NULL,
             location VARCHAR(255) NOT NULL,
@@ -31,7 +31,7 @@ async function seedDatabase() {
         console.log('Seeding database...');
         for (const event of events) {
             const insertQuery = `
-                INSERT INTO music_discovery_zhsg (id, title, location, date, image, text)
+                INSERT INTO events (id, title, location, date, image, text)
                 VALUES ($1, $2, $3, $4, $5, $6)
             `;
             const values = [event.id, event.title, event.location, event.date, event.image, event.text];

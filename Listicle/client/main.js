@@ -30,7 +30,7 @@ const layout = (title, content) => `
 // Home Page
 app.get('/', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM music_discovery_zhsg ORDER BY date');
+        const result = await pool.query('SELECT * FROM events ORDER BY date');
         const events = result.rows;
         
         let listHtml = `<h1>Upcoming Events</h1>
@@ -73,7 +73,7 @@ app.get('/search', async (req, res) => {
 
     try {
         const result = await pool.query(
-            `SELECT * FROM music_discovery_zhsg WHERE ${attribute} ILIKE $1 ORDER BY date`,
+            `SELECT * FROM events WHERE ${attribute} ILIKE $1 ORDER BY date`,
             [`%${query}%`]
         );
         const events = result.rows;
@@ -104,7 +104,7 @@ app.get('/search', async (req, res) => {
 // View Details Page
 app.get('/events/:eventId', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM music_discovery_zhsg WHERE id = $1', [req.params.eventId]);
+        const result = await pool.query('SELECT * FROM events WHERE id = $1', [req.params.eventId]);
         
         if (result.rows.length === 0) {
             return res.status(404).send(layout("404", "<h1>Event Not Found</h1><a href='/'>Back to Home</a>"));
